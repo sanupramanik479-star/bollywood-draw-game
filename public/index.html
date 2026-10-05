@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bollywood Draw & Guess</title>
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+
+  <!-- HOME SCREEN -->
+  <section id="homeScreen" class="screen active">
+    <div class="home-card">
+      <div class="logo">🎬</div>
+
+      <h1>Bollywood Draw & Guess</h1>
+      <p class="subtitle">
+        Draw Bollywood movies. Guess. Score. Win!
+      </p>
+
+      <input
+        id="nameInput"
+        type="text"
+        maxlength="20"
+        placeholder="Enter your name"
+      />
+
+      <button id="createRoomBtn" class="primary-btn">
+        🎬 Create Room
+      </button>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <input
+        id="roomInput"
+        type="text"
+        maxlength="4"
+        placeholder="Enter room code"
+      />
+
+      <button id="joinRoomBtn" class="secondary-btn">
+        🚪 Join Room
+      </button>
+
+      <p id="homeError" class="error"></p>
+    </div>
+  </section>
+
+
+  <!-- LOBBY SCREEN -->
+  <section id="lobbyScreen" class="screen">
+    <div class="lobby-card">
+
+      <h2>🎥 Movie Lobby</h2>
+
+      <div class="room-code-box">
+        <span>Room Code</span>
+        <strong id="roomCode">----</strong>
+        <button id="copyRoomBtn">📋 Copy</button>
+      </div>
+
+      <p id="lobbyInfo" class="info"></p>
+
+      <h3>Players</h3>
+
+      <div id="lobbyPlayers" class="players-list"></div>
+
+      <button id="startBtn" class="primary-btn">
+        ▶ Start Game
+      </button>
+
+      <p class="small-text">
+        Minimum 2 players required
+      </p>
+
+      <p id="lobbyError" class="error"></p>
+    </div>
+  </section>
+
+
+  <!-- GAME SCREEN -->
+  <section id="gameScreen" class="screen">
+
+    <header class="game-header">
+
+      <div class="game-title">
+        🎬 Bollywood Draw
+      </div>
+
+      <div class="game-info">
+        <span id="gameRoomCode">ROOM</span>
+        <span id="roundText">Round 1 / 5</span>
+        <span id="timer">60</span>
+      </div>
+
+    </header>
+
+
+    <main class="game-layout">
+
+      <!-- LEFT / MAIN AREA -->
+      <div class="drawing-section">
+
+        <div class="movie-status">
+          <div id="movieStatus">
+            🎭 Waiting for movie...
+          </div>
+
+          <div id="drawerInfo"></div>
+        </div>
+
+        <div class="canvas-wrapper">
+          <canvas id="drawingCanvas"></canvas>
+        </div>
+
+        <div class="drawing-tools">
+
+          <button id="penBtn" class="tool-btn active">
+            ✏️ Pen
+          </button>
+
+          <button id="eraserBtn" class="tool-btn">
+            🧹 Eraser
+          </button>
+
+          <button id="clearBtn" class="tool-btn">
+            🗑️ Clear
+          </button>
+
+          <input
+            id="colorPicker"
+            type="color"
+            value="#000000"
+            title="Choose color"
+          />
+
+          <input
+            id="brushSize"
+            type="range"
+            min="2"
+            max="30"
+            value="5"
+            title="Brush size"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT SIDE -->
+      <aside class="side-panel">
+
+        <div class="score-panel">
+
+          <h3>🏆 Scoreboard</h3>
+
+          <div id="scoreboard"></div>
+
+        </div>
+
+
+        <div class="chat-panel">
+
+          <h3>💬 Chat</h3>
+
+          <div id="chatMessages" class="chat-messages"></div>
+
+          <form id="chatForm" class="chat-form">
+
+            <input
+              id="chatInput"
+              type="text"
+              maxlength="200"
+              placeholder="Guess the movie..."
+              autocomplete="off"
+            />
+
+            <button type="submit">
+              ➤
+            </button>
+
+          </form>
+
+        </div>
+
+      </aside>
+
+    </main>
+
+  </section>
+
+
+  <!-- ROUND RESULT MODAL -->
+  <div id="roundModal" class="modal hidden">
+
+    <div class="modal-card">
+
+      <h2>🎬 Round Over!</h2>
+
+      <p>Movie was:</p>
+
+      <h3 id="revealedMovie">
+        Movie
+      </h3>
+
+      <p id="roundWinner">
+        Nobody guessed it.
+      </p>
+
+      <button id="nextRoundBtn" class="primary-btn">
+        Next Round
+      </button>
+
+      <p id="nextRoundInfo" class="small-text"></p>
+
+    </div>
+
+  </div>
+
+
+  <!-- GAME OVER SCREEN -->
+  <section id="gameOverScreen" class="screen">
+
+    <div class="game-over-card">
+
+      <div class="trophy">
+        🏆
+      </div>
+
+      <h1>Game Over!</h1>
+
+      <p class="subtitle">
+        Final Bollywood Scores
+      </p>
+
+      <div id="finalScoreboard"></div>
+
+      <button id="playAgainBtn" class="primary-btn">
+        🔄 Play Again
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- SOCKET.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- GAME SCRIPT -->
+  <script src="/script.js"></script>
+
+</body>
+</html>
