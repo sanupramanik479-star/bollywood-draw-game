@@ -20,317 +20,436 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   background:
-    radial-gradient(circle at top, #25202a 0%, #08090d 45%),
+    radial-gradient(circle at top, #25202a 0%, #08090d 48%),
     #08090d;
   color: var(--white);
   min-height: 100vh;
 }
 
-button,
-input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* ================= HOME ================= */
+/* ---------------- HOME / LOBBY / GAME ---------------- */
 
 .screen {
   min-height: 100vh;
   padding: 24px 16px;
 }
 
-.home-container {
+.screen:not(.active) {
+  display: none;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ---------------- HOME ---------------- */
+
+#homeScreen {
+  align-items: center;
+  justify-content: center;
+}
+
+.home-card {
   width: 100%;
-  max-width: 480px;
-  margin: auto;
-  padding-top: 40px;
+  max-width: 440px;
+  background: rgba(18, 20, 28, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 35px 25px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
 .logo {
-  text-align: center;
-  margin-bottom: 30px;
+  font-size: 60px;
+  margin-bottom: 12px;
 }
 
-.logo .clapper {
-  font-size: 55px;
-  margin-bottom: 8px;
-}
-
-.logo h1 {
-  font-size: 38px;
-  font-weight: 900;
+.home-card h1 {
+  font-size: 32px;
   color: var(--gold);
-  text-shadow: 0 0 20px rgba(245, 196, 81, 0.25);
+  margin-bottom: 10px;
 }
 
-.logo p {
+.subtitle {
   color: var(--muted);
-  margin-top: 8px;
+  line-height: 1.5;
+  margin-bottom: 25px;
 }
 
-.card {
-  background: rgba(18, 20, 28, 0.95);
+.home-card input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+  background: #0c0e14;
+  color: white;
+  outline: none;
+  font-size: 16px;
 }
 
-.card h2 {
+.home-card input:focus {
+  border-color: var(--gold);
+}
+
+.primary-btn,
+.secondary-btn {
+  width: 100%;
+  border: 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: white;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.primary-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondary-btn {
+  background: var(--card-light);
+  color: white;
+  border: 1px solid var(--border);
+}
+
+.secondary-btn:hover {
+  border-color: var(--gold);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--muted);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---------------- LOBBY ---------------- */
+
+#lobbyScreen {
+  align-items: center;
+  justify-content: center;
+}
+
+.lobby-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(18, 20, 28, 0.97);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lobby-card h2 {
+  text-align: center;
+  color: var(--gold);
+  margin-bottom: 22px;
+}
+
+.room-code-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0b0d13;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
   margin-bottom: 18px;
 }
 
-.input {
-  width: 100%;
-  padding: 14px 15px;
-  margin-bottom: 12px;
-  background: #0d0f15;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: white;
-  outline: none;
+.room-code-box span {
+  color: var(--muted);
+  font-size: 13px;
 }
 
-.input:focus {
-  border-color: var(--red);
-}
-
-.btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  background: linear-gradient(135deg, var(--red), var(--red-dark));
-  font-weight: 800;
-  margin-top: 8px;
-  box-shadow: 0 6px 20px rgba(226, 29, 47, 0.25);
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn.secondary {
-  background: #242733;
-}
-
-.error {
-  color: #ff6b78;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-/* ================= LOBBY ================= */
-
-.lobby-container {
-  max-width: 650px;
-  margin: auto;
-  padding-top: 30px;
-}
-
-.room-code {
-  text-align: center;
-  background: #0b0d13;
-  border: 1px solid var(--gold);
-  border-radius: 14px;
-  padding: 15px;
-  margin: 15px 0 22px;
-}
-
-.room-code span {
+.room-code-box strong {
+  flex: 1;
   color: var(--gold);
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing: 6px;
+  font-size: 25px;
+  letter-spacing: 5px;
+  text-align: center;
 }
 
-.copy-btn {
-  margin-left: 8px;
-  padding: 8px 12px;
+.room-code-box button {
+  background: var(--card-light);
+  color: white;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: #20232d;
-  color: white;
+  padding: 8px 10px;
+  cursor: pointer;
 }
 
-.players {
-  display: grid;
-  gap: 10px;
-  margin: 15px 0;
+.info {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 22px;
 }
 
-.player {
+.lobby-card h3 {
+  margin-bottom: 12px;
+}
+
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.player-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 13px;
   background: var(--card-light);
-  border-radius: 10px;
   border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
 }
 
-.host {
-  color: var(--gold);
-  font-size: 12px;
+.small-text {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 12px;
 }
 
-/* ================= GAME ================= */
+/* ---------------- GAME ---------------- */
 
-.game-screen {
-  padding: 10px;
-}
-
-.game-container {
-  max-width: 1300px;
-  margin: auto;
+#gameScreen {
+  flex-direction: column;
+  padding: 0;
 }
 
 .game-header {
+  min-height: 64px;
+  background: #10121a;
+  border-bottom: 1px solid var(--border);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 15px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 18px;
 }
 
-.round-info {
-  color: var(--gold);
+.game-title {
+  font-size: 21px;
   font-weight: bold;
-}
-
-.timer {
-  font-size: 25px;
-  font-weight: 900;
-  color: var(--red);
-}
-
-.movie-status {
-  text-align: center;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #1a1620, #10121a);
-  border: 1px solid var(--gold);
-  border-radius: 12px;
   color: var(--gold);
-  font-weight: bold;
 }
 
-.game-layout {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+.game-info {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.canvas-card {
-  background: #11131a;
+.game-info span {
+  background: var(--card-light);
   border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 10px;
+  padding: 7px 11px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+#timer {
+  min-width: 45px;
+  text-align: center;
+  color: var(--gold);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#timer.danger {
+  color: #ff3b4b;
+  animation: pulse 0.7s infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.12);
+  }
+}
+
+.game-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 15px;
+  padding: 15px;
+  min-height: 0;
+}
+
+.drawing-section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.movie-status {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 16px;
+  margin-bottom: 12px;
+}
+
+#movieStatus {
+  color: var(--gold);
+  font-weight: bold;
+}
+
+#drawerInfo {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.canvas-wrapper {
+  flex: 1;
+  min-height: 400px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid var(--border);
 }
 
 #drawingCanvas {
   display: block;
   width: 100%;
-  height: 520px;
+  height: 100%;
+  min-height: 400px;
   background: white;
-  border-radius: 10px;
   touch-action: none;
-  cursor: crosshair;
 }
 
-.tools {
+.drawing-tools {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px;
   margin-top: 10px;
+  border-radius: 12px;
 }
 
 .tool-btn {
-  padding: 9px 13px;
-  background: #242733;
+  background: var(--card-light);
   color: white;
   border: 1px solid var(--border);
   border-radius: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
 }
 
 .tool-btn.active {
   background: var(--red);
+  border-color: var(--red);
 }
 
-.color-picker {
-  width: 45px;
+#colorPicker {
+  width: 42px;
   height: 38px;
-  border: none;
+  border: 0;
   background: transparent;
+  cursor: pointer;
 }
 
-.brush-size {
-  padding: 8px;
-  background: #242733;
-  color: white;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+#brushSize {
+  width: 100px;
 }
 
-/* ================= SIDEBAR ================= */
+/* ---------------- SIDE PANEL ---------------- */
 
-.sidebar {
+.side-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
+  min-width: 0;
 }
 
-.panel {
+.score-panel,
+.chat-panel {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 14px;
+  padding: 15px;
 }
 
-.panel h3 {
+.score-panel {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.score-panel h3,
+.chat-panel h3 {
   color: var(--gold);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.score-row {
+.score-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 4px;
-  border-bottom: 1px solid #292c35;
+  align-items: center;
+  padding: 9px 8px;
+  border-bottom: 1px solid #292c36;
 }
 
-.score-row:last-child {
-  border-bottom: none;
+.score-item:last-child {
+  border-bottom: 0;
 }
 
-.score {
+.score-item strong {
   color: var(--gold);
-  font-weight: bold;
+}
+
+.chat-panel {
+  flex: 1;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .chat-messages {
-  height: 210px;
+  flex: 1;
   overflow-y: auto;
-  background: #0b0d12;
-  border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
+  min-height: 0;
+  padding: 5px 2px;
 }
 
 .chat-message {
-  padding: 5px;
+  padding: 7px 5px;
+  line-height: 1.4;
+  word-break: break-word;
   font-size: 14px;
 }
 
@@ -340,49 +459,57 @@ button {
 
 .chat-form {
   display: flex;
-  gap: 5px;
+  gap: 7px;
+  margin-top: 10px;
 }
 
 .chat-form input {
-  min-width: 0;
   flex: 1;
-  padding: 10px;
-  background: #0b0d12;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  min-width: 0;
+  background: #0b0d13;
   color: white;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 11px;
+  outline: none;
 }
 
 .chat-form button {
-  padding: 10px 13px;
+  width: 45px;
+  border: 0;
+  border-radius: 9px;
   background: var(--red);
   color: white;
-  border: none;
-  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-/* ================= MODAL ================= */
+/* ---------------- MODAL ---------------- */
 
 .modal {
   position: fixed;
   inset: 0;
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.75);
   z-index: 100;
+}
+
+.modal.hidden {
+  display: none;
 }
 
 .modal-card {
   width: 100%;
   max-width: 430px;
-  background: #151720;
-  border: 1px solid var(--gold);
-  border-radius: 18px;
-  padding: 25px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
 }
 
 .modal-card h2 {
@@ -390,96 +517,184 @@ button {
   margin-bottom: 15px;
 }
 
-.revealed-movie {
+.modal-card h3 {
   font-size: 25px;
-  font-weight: 900;
-  margin: 15px 0;
+  margin: 12px 0;
+  color: white;
 }
 
-.winner {
-  color: var(--green);
-  margin-bottom: 15px;
+.modal-card p {
+  color: var(--muted);
 }
 
-/* ================= GAME OVER ================= */
+/* ---------------- GAME OVER ---------------- */
 
-.game-over-container {
-  max-width: 600px;
-  margin: auto;
-  padding-top: 50px;
+#gameOverScreen {
+  align-items: center;
+  justify-content: center;
+}
+
+.game-over-card {
+  width: 100%;
+  max-width: 500px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 35px 25px;
   text-align: center;
 }
 
-.final-scoreboard {
+.trophy {
+  font-size: 70px;
+  margin-bottom: 10px;
+}
+
+.game-over-card h1 {
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+#finalScoreboard {
   margin: 25px 0;
 }
 
 .final-player {
   display: flex;
   justify-content: space-between;
-  padding: 14px;
-  margin-bottom: 8px;
-  background: var(--card);
+  align-items: center;
+  background: var(--card-light);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 11px;
+  padding: 13px;
+  margin-bottom: 8px;
 }
 
-.rank {
+.final-player strong {
   color: var(--gold);
-  font-weight: 900;
 }
 
-/* ================= MOBILE ================= */
+/* ---------------- ERRORS ---------------- */
+
+.error {
+  color: #ff5968;
+  text-align: center;
+  font-size: 14px;
+  min-height: 20px;
+  margin-top: 10px;
+}
+
+/* ---------------- MOBILE ---------------- */
 
 @media (max-width: 850px) {
   .game-layout {
     grid-template-columns: 1fr;
   }
 
-  #drawingCanvas {
-    height: 420px;
+  .side-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .sidebar {
-    display: grid;
-    grid-template-columns: 1fr;
+  .score-panel {
+    max-height: 250px;
+  }
+
+  .chat-panel {
+    min-height: 250px;
+  }
+
+  .canvas-wrapper,
+  #drawingCanvas {
+    min-height: 430px;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .screen {
-    padding: 15px 10px;
+    padding: 12px;
   }
 
-  .home-container {
-    padding-top: 25px;
+  .home-card,
+  .lobby-card,
+  .game-over-card {
+    padding: 24px 18px;
   }
 
-  .logo h1 {
-    font-size: 30px;
+  .home-card h1 {
+    font-size: 26px;
+  }
+
+  .logo {
+    font-size: 50px;
   }
 
   .game-header {
-    font-size: 13px;
+    padding: 8px 10px;
+    flex-wrap: wrap;
   }
 
-  .timer {
-    font-size: 21px;
+  .game-title {
+    font-size: 17px;
   }
 
+  .game-info {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .game-info span {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+
+  .game-layout {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .canvas-wrapper,
   #drawingCanvas {
-    height: 360px;
+    min-height: 350px;
   }
 
-  .tools {
+  .side-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .score-panel {
+    max-height: 220px;
+  }
+
+  .chat-panel {
+    min-height: 260px;
+  }
+
+  .room-code-box {
+    flex-wrap: wrap;
+  }
+
+  .room-code-box strong {
+    width: 100%;
+    order: -1;
+  }
+
+  .drawing-tools {
     justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .home-card h1 {
+    font-size: 23px;
+  }
+
+  .canvas-wrapper,
+  #drawingCanvas {
+    min-height: 300px;
   }
 
   .tool-btn {
-    padding: 8px 10px;
-  }
-
-  .room-code span {
-    font-size: 24px;
+    padding: 8px 9px;
+    font-size: 12px;
   }
 }
