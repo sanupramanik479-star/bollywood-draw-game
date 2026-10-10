@@ -489,6 +489,42 @@ copyRoomBtn.addEventListener("click", async () => {
 });
 
 // -------------------------
+// Share Invite Link
+// -------------------------
+
+function getInviteLink() {
+    const url = new URL(window.location.href);
+    url.searchParams.set("room", roomCode);
+    url.hash = "";
+    return url.toString();
+}
+
+shareInviteBtn.addEventListener("click", async () => {
+    if (!roomCode) return;
+
+    const inviteLink = getInviteLink();
+
+    try {
+        if (navigator.share) {
+            await navigator.share({
+                title: "Bollywood Draw & Guess",
+                text: "Join my Bollywood movie guessing game!",
+                url: inviteLink
+            });
+        } else if (navigator.clipboard) {
+            await navigator.clipboard.writeText(inviteLink);
+            alert("Invite link copied! Share it on WhatsApp.");
+        } else {
+            window.prompt("Copy and share this invite link:", inviteLink);
+        }
+    } catch (error) {
+        if (error.name !== "AbortError") {
+            window.prompt("Copy and share this invite link:", inviteLink);
+        }
+    }
+});
+
+// -------------------------
 // Start Game
 // -------------------------
 
@@ -844,7 +880,23 @@ window.addEventListener("resize", () => {
 // -------------------------
 // Initial Setup
 // -------------------------
+// -------------------------
+// Join from Invite Link
+// -------------------------
 
+const inviteRoomCode = new URLSearchParams(
+    window.location.search
+).get("room");
+
+if (inviteRoomCode) {
+    const code = inviteRoomCode.trim().toUpperCase();
+
+    if (/^[A-Z0-9]{4}$/.test(code)) {
+        roomInput.value = code;
+        nameInput.focus();
+        showError(homeError, "Invite link detected! Enter your name and tap Join Room.");
+    }
+}
 setTimeout(() => {
     resizeCanvas();
 }, 100);
