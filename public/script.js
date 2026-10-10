@@ -36,6 +36,7 @@ const homeError = $("homeError");
 // Lobby
 const roomCodeEl = $("roomCode");
 const copyRoomBtn = $("copyRoomBtn");
+const shareInviteBtn = $("shareInviteBtn");
 const lobbyPlayers = $("lobbyPlayers");
 const startBtn = $("startBtn");
 const lobbyError = $("lobbyError");
