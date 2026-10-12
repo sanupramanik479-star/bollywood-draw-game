@@ -1,262 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bollywood Draw & Guess</title>
-
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090a10">
+  <title>CineDraw — Bollywood Draw & Guess</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
-
 <body>
-
-  <!-- HOME SCREEN -->
   <section id="homeScreen" class="screen active">
     <div class="home-card">
-      <div class="logo">🎬</div>
-
-      <h1>Bollywood Draw & Guess</h1>
-      <p class="subtitle">
-        Draw Bollywood movies. Guess. Score. Win!
-      </p>
-
-      <input
-        id="nameInput"
-        type="text"
-        maxlength="20"
-        placeholder="Enter your name"
-      />
-
-      <button id="createRoomBtn" class="primary-btn">
-        🎬 Create Room
-      </button>
-
-      <div class="divider">
-        <span>OR</span>
-      </div>
-
-      <input
-        id="roomInput"
-        type="text"
-        maxlength="4"
-        placeholder="Enter room code"
-      />
-
-      <button id="joinRoomBtn" class="secondary-btn">
-        🚪 Join Room
-      </button>
-
-      <p id="homeError" class="error"></p>
+      <div class="brand-mark">🎬</div>
+      <p class="eyebrow">THE BOLLYWOOD PARTY GAME</p>
+      <h1>Cine<span>Draw</span></h1>
+      <p class="subtitle">Draw the movie. Beat the clock. Become a legend.</p>
+      <label class="field-label" for="nameInput">YOUR PLAYER NAME</label>
+      <input id="nameInput" type="text" maxlength="20" placeholder="Enter your name" autocomplete="nickname">
+      <button id="createRoomBtn" class="primary-btn">✦ Create a room</button>
+      <div class="or-divider"><span>OR JOIN FRIENDS</span></div>
+      <input id="roomInput" type="text" maxlength="4" placeholder="4-character room code" autocomplete="off">
+      <button id="joinRoomBtn" class="secondary-btn">Join room ↗</button>
+      <p id="homeError" class="error" aria-live="polite"></p>
+      <p class="footnote">Bollywood films only · Up to 12 players</p>
     </div>
   </section>
 
-
-  <!-- LOBBY SCREEN -->
   <section id="lobbyScreen" class="screen">
-    <div class="lobby-card">
-
-      <h2>🎥 Movie Lobby</h2>
-
-      <div class="room-code-box">
-        <span>Room Code</span>
-        <strong id="roomCode">----</strong>
-        <button id="copyRoomBtn">📋 Copy</button>
-        <button id="shareInviteBtn" class="secondary-btn">
-  🔗 Share Invite Link
-        </button>
+    <div class="lobby-shell">
+      <header class="lobby-top"><div class="brand-mini">🎬 <strong>CineDraw</strong></div><span class="live-pill">● PRIVATE ROOM</span></header>
+      <div class="lobby-card">
+        <p class="eyebrow">YOUR PRIVATE SCREENING</p>
+        <h2>Gather your crew<span>.</span></h2>
+        <p id="lobbyInfo" class="info">Share the invite and get everyone in.</p>
+        <div class="invite-card">
+          <div><span class="field-label">ROOM CODE</span><strong id="roomCode" class="room-code">----</strong></div>
+          <button id="copyRoomBtn" class="icon-btn" aria-label="Copy room code">▣</button>
+        </div>
+        <button id="shareInviteBtn" class="primary-btn">🔗 Share invite link</button>
+        <div class="players-heading"><h3>Players in the room</h3><span id="playerCount">0 / 12</span></div>
+        <div id="lobbyPlayers" class="players-list"></div>
+        <div id="hostSettings" class="host-settings">
+          <div class="setting"><label for="roundDuration">ROUND DURATION</label><select id="roundDuration"><option value="30">30 seconds</option><option value="45">45 seconds</option><option value="60" selected>60 seconds</option><option value="90">90 seconds</option><option value="120">120 seconds</option></select></div>
+          <div class="setting"><label for="totalRounds">NUMBER OF ROUNDS</label><select id="totalRounds"><option value="3">3 rounds</option><option value="5" selected>5 rounds</option><option value="7">7 rounds</option><option value="10">10 rounds</option></select></div>
+        </div>
+        <button id="startBtn" class="primary-btn" disabled>▶ Start game</button>
+        <p class="small-text">At least 2 players are needed to start.</p>
+        <p id="lobbyError" class="error" aria-live="polite"></p>
       </div>
-
-      <p id="lobbyInfo" class="info"></p>
-
-      <h3>Players</h3>
-
-      <div id="lobbyPlayers" class="players-list"></div>
-
-      <button id="startBtn" class="primary-btn">
-        ▶ Start Game
-      </button>
-
-      <p class="small-text">
-        Minimum 2 players required
-      </p>
-
-      <p id="lobbyError" class="error"></p>
+      <button id="backHomeBtn" class="text-btn">← Back to home</button>
     </div>
   </section>
 
-
-  <!-- GAME SCREEN -->
-  <section id="gameScreen" class="screen">
-
+  <section id="gameScreen" class="screen game-screen">
     <header class="game-header">
-
-      <div class="game-title">
-        🎬 Bollywood Draw
-      </div>
-
-      <div class="game-info">
-        <span id="gameRoomCode">ROOM</span>
-        <span id="roundText">Round 1 / 5</span>
-        <span id="timer">60</span>
-      </div>
-
+      <div class="brand-mini">🎬 <strong>CineDraw</strong></div>
+      <div class="game-info"><span id="gameRoomCode" class="room-chip">ROOM</span><span id="roundText">ROUND 1 / 5</span><span class="timer-chip">⏱ <b id="timer">60</b>s</span></div>
     </header>
-
-
     <main class="game-layout">
-
-      <!-- LEFT / MAIN AREA -->
-      <div class="drawing-section">
-
-        <div class="movie-status">
-          <div id="movieStatus">
-            🎭 Waiting for movie...
-          </div>
-
-          <div id="drawerInfo"></div>
-        </div>
-
-        <div class="canvas-wrapper">
-          <canvas id="drawingCanvas"></canvas>
-        </div>
-
-        <div class="drawing-tools">
-
-          <button id="penBtn" class="tool-btn active">
-            ✏️ Pen
-          </button>
-
-          <button id="eraserBtn" class="tool-btn">
-            🧹 Eraser
-          </button>
-
-          <button id="clearBtn" class="tool-btn">
-            🗑️ Clear
-          </button>
-
-          <input
-            id="colorPicker"
-            type="color"
-            value="#000000"
-            title="Choose color"
-          />
-
-          <input
-            id="brushSize"
-            type="range"
-            min="2"
-            max="30"
-            value="5"
-            title="Brush size"
-          />
-
-        </div>
-
-      </div>
-
-
-      <!-- RIGHT SIDE -->
-      <aside class="side-panel">
-
-        <div class="score-panel">
-
-          <h3>🏆 Scoreboard</h3>
-
-          <div id="scoreboard"></div>
-
-        </div>
-
-
-        <div class="chat-panel">
-
-          <h3>💬 Chat</h3>
-
-          <div id="chatMessages" class="chat-messages"></div>
-
-          <form id="chatForm" class="chat-form">
-
-            <input
-              id="chatInput"
-              type="text"
-              maxlength="200"
-              placeholder="Guess the movie..."
-              autocomplete="off"
-            />
-
-            <button type="submit">
-              ➤
-            </button>
-
-          </form>
-
-        </div>
-
+      <aside class="players-rail">
+        <div class="panel-heading"><h3>Players</h3><span>🏆</span></div>
+        <div id="scoreboard" class="scoreboard"></div>
       </aside>
-
+      <section class="drawing-section">
+        <div class="movie-status"><div id="movieStatus">🎭 Waiting for the movie...</div><div id="drawerInfo">The drawer will choose a film.</div></div>
+        <div class="canvas-wrapper"><canvas id="drawingCanvas" aria-label="Shared drawing canvas"></canvas><div id="canvasEmpty" class="canvas-empty">The drawing will appear here</div></div>
+        <div class="drawing-tools">
+          <button id="penBtn" class="tool-btn active">✏ Pen</button><button id="eraserBtn" class="tool-btn">⌫ Eraser</button><button id="clearBtn" class="tool-btn">Clear</button>
+          <label class="color-control" title="Pen color"><span>Color</span><input id="colorPicker" type="color" value="#171923"></label>
+          <label class="size-control" for="brushSize">Size <input id="brushSize" type="range" min="2" max="30" value="5"></label>
+        </div>
+      </section>
+      <aside class="chat-panel">
+        <div class="panel-heading"><h3>Guesses & chat</h3><span class="live-pill">LIVE</span></div>
+        <div id="chatMessages" class="chat-messages" aria-live="polite"><div class="system-line">🎬 Welcome to CineDraw! Guess the Bollywood movie.</div></div>
+        <p id="guessFeedback" class="guess-feedback" aria-live="polite"></p>
+        <form id="chatForm" class="chat-form"><input id="chatInput" type="text" maxlength="200" placeholder="Type your guess..." autocomplete="off"><button type="submit" aria-label="Send guess">➤</button></form>
+        <p class="chat-hint">Correct guesses earn points. Keep trying!</p>
+      </aside>
     </main>
-
+    <section id="roundResults" class="round-results hidden" aria-live="polite">
+      <div class="results-inner"><p class="eyebrow">ROUND COMPLETE</p><h2 id="resultHeadline">Nice round!</h2><p class="result-movie-label">THE MOVIE WAS</p><h3 id="revealedMovie">Movie title</h3><p id="roundWinner" class="result-winner"></p><div id="roundScoreboard" class="round-scoreboard"></div><button id="nextRoundBtn" class="primary-btn">Next round →</button><p id="nextRoundInfo" class="small-text"></p></div>
+    </section>
   </section>
 
-
-  <!-- ROUND RESULT MODAL -->
-  <div id="roundModal" class="modal hidden">
-
-    <div class="modal-card">
-
-      <h2>🎬 Round Over!</h2>
-
-      <p>Movie was:</p>
-
-      <h3 id="revealedMovie">
-        Movie
-      </h3>
-
-      <p id="roundWinner">
-        Nobody guessed it.
-      </p>
-
-      <button id="nextRoundBtn" class="primary-btn">
-        Next Round
-      </button>
-
-      <p id="nextRoundInfo" class="small-text"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- GAME OVER SCREEN -->
   <section id="gameOverScreen" class="screen">
-
-    <div class="game-over-card">
-
-      <div class="trophy">
-        🏆
-      </div>
-
-      <h1>Game Over!</h1>
-
-      <p class="subtitle">
-        Final Bollywood Scores
-      </p>
-
-      <div id="finalScoreboard"></div>
-
-      <button id="playAgainBtn" class="primary-btn">
-        🔄 Play Again
-      </button>
-
-    </div>
-
+    <div class="game-over-card"><div class="trophy">🏆</div><p class="eyebrow">THAT'S A WRAP</p><h1>Game over<span>.</span></h1><p class="subtitle">The CineDraw champion has been crowned.</p><div id="finalScoreboard"></div><button id="playAgainBtn" class="primary-btn">↻ Play again</button><button id="returnLobbyBtn" class="secondary-btn">Back to lobby</button></div>
   </section>
 
-
-  <!-- SOCKET.IO -->
+  <div id="choiceModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="choiceTitle">
+    <div class="modal-card choice-card"><p class="eyebrow">YOU'RE THE ARTIST</p><h2 id="choiceTitle">Choose a movie</h2><p>Pick one title to draw. Only you will see the answer.</p><div id="movieChoices" class="movie-choices"></div><p id="choiceWait" class="small-text"></p></div>
+  </div>
   <script src="/socket.io/socket.io.js"></script>
-
-  <!-- GAME SCRIPT -->
   <script src="/script.js"></script>
-
 </body>
 </html>
