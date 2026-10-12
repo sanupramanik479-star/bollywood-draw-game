@@ -1,7 +1,7 @@
 {
-  "name": "bollywood-draw-guess",
+  "name": "cinedraw",
   "version": "1.0.0",
-  "description": "Bollywood-only multiplayer drawing and guessing game",
+  "description": "CineDraw - Bollywood-only multiplayer drawing and guessing game",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
